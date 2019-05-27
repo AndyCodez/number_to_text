@@ -28,7 +28,7 @@ class Num
 				"fifty", "sixty" , "seventy", "eighty", "ninety"].map!(&:capitalize)						
 
 		@scale_numbers = ["", "thousand", "million", "billion"].map!(&:capitalize)
-		
+
 		# Zero rule
 		return "Zero" if number == 0				
 		num_length = number.to_s.length
@@ -81,7 +81,7 @@ class Num
 		# Process the remaining groups
 		for i in 1...4 do
 			# Only add non-zero digits
-			if digit_groups[i] != 0
+			unless digit_groups[i] == 0
 				# Create tne string to add as a prefix
 				prefix = group_text[i] + " " + @scale_numbers[i]
 				if combined.length != 0
@@ -111,7 +111,7 @@ class Num
 			# Hundreds rules
 			if hundreds != 0 
 				group_text += @number_values[hundreds] + " Hundred"
-				if tens_units != 0 
+				unless tens_units == 0 
 					group_text += " and "
 				end
 			end
@@ -122,7 +122,7 @@ class Num
 			# Tens rule
 			if tens >= 2
 				group_text += @tens[tens]
-				if units != 0
+				unless units == 0
 					group_text += " " + @number_values[units]
 				end
 			elsif tens_units != 0 
