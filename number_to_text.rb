@@ -16,20 +16,18 @@
 # Ouput: Forty Five Thousand Seven Hundred Eighty One" 
 
 class Num
-	def initialize
-	end
 
 	def number_to_text(number)
-		@@number_values = %w(zero one two three four five 
+		@number_values = %w(zero one two three four five 
 							six seven eight nine ten eleven 
 							twelve thirteen fourteen fifteen 
 							sixteen seventeen eighteen nineteen
 							).map!(&:capitalize)
 
-		@@tens = ["", "", "twenty", "thirty", "forty", 
+		@tens = ["", "", "twenty", "thirty", "forty", 
 				"fifty", "sixty" , "seventy", "eighty", "ninety"].map!(&:capitalize)						
-		
-		scale_numbers = ["", "thousand", "million", "billion"].map!(&:capitalize)
+
+		@scale_numbers = ["", "thousand", "million", "billion"].map!(&:capitalize)
 		
 		# Zero rule
 		return "Zero" if number == 0				
@@ -85,7 +83,7 @@ class Num
 			# Only add non-zero digits
 			if digit_groups[i] != 0
 				# Create tne string to add as a prefix
-				prefix = group_text[i] + " " + scale_numbers[i]
+				prefix = group_text[i] + " " + @scale_numbers[i]
 				if combined.length != 0
 					prefix += append_and ? " and " : ", "
 				end
@@ -100,7 +98,7 @@ class Num
 
 		# Negative rule
 		combined = "Negative " + combined if number < 0
-		
+
 		return combined
 	end
 
@@ -112,7 +110,7 @@ class Num
 
 			# Hundreds rules
 			if hundreds != 0 
-				group_text += @@number_values[hundreds] + " Hundred"
+				group_text += @number_values[hundreds] + " Hundred"
 				if tens_units != 0 
 					group_text += " and "
 				end
@@ -123,12 +121,12 @@ class Num
 
 			# Tens rule
 			if tens >= 2
-				group_text += @@tens[tens]
+				group_text += @tens[tens]
 				if units != 0
-					group_text += " " + @@number_values[units]
+					group_text += " " + @number_values[units]
 				end
 			elsif tens_units != 0 
-					group_text += @@number_values[tens_units]
+					group_text += @number_values[tens_units]
 			end
 			return group_text
 		end	
