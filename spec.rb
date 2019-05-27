@@ -4,7 +4,6 @@ require_relative "number_to_text"
 describe "Num.new" do
 	num = Num.new
 	it "should return a number in words" do
-		
 		num.number_to_text(0).must_equal "Zero"
 		num.number_to_text(13).must_equal "Thirteen"
 		num.number_to_text(23).must_equal "Twenty Three"

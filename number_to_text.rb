@@ -17,16 +17,16 @@
 
 class Num
 	def number_to_text(number)
-		@@number_values = ["zero", "one", "two", "three", "four", "five", 
-						"six", "seven", "eight", "nine",
-						"ten" , "eleven","twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
-		@@number_values.map!(&:capitalize)
+		@@number_values = %w(zero one two three four five 
+							six seven eight nine ten eleven 
+							twelve thirteen fourteen fifteen 
+							sixteen seventeen eighteen nineteen
+							).map!(&:capitalize)
 
 		@@tens = ["", "", "twenty", "thirty", "forty", 
-				"fifty", "sixty" , "seventy", "eighty", "ninety"]
-		@@tens.map!(&:capitalize)						
+				"fifty", "sixty" , "seventy", "eighty", "ninety"].map!(&:capitalize)						
 		
-		scale_numbers = ["", "Thousand", "Million", "Billion"]
+		scale_numbers = ["", "thousand", "million", "billion"].map!(&:capitalize)
 		
 		# Zero rule
 		return "Zero" if number == 0				
