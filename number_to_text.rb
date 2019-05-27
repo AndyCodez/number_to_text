@@ -17,6 +17,7 @@
 
 def number_to_text(number)
 	return "zero" if number == 0				
+	# return "Works for upto 900000" if number > 900000				
 
 	num_length = number.to_s.length
 
@@ -31,63 +32,53 @@ def number_to_text(number)
 
 	multiples = {100 => "hundred", 1000 => "thousand", 1000000 => "million"}
 	
-	if num_length == 1 
-		return number_values[number] 
-	elsif num_length == 2 && number < 20
-		return number_values[number] 
-	elsif num_length == 2 && number >= 20
-		# tens
-		first_number = number.to_s[0].to_i
-		last_number = number.to_s[num_length - 1] 
+	return number_values[number] if num_length == 1 
+
+	rest_of_digits = number.to_s[1..num_length - 1].to_i
+
+	first_number = number.to_s[0].to_i
+	mid_number = number.to_s[1].to_i
+	last_number = number.to_s[num_length - 1]
+
+
+	case num_length
+	when 2
+		return number_values[number] if number < 20
 		if last_number.to_i == 0
 			return tens[first_number * 10] + " "
 		else	
 			return tens[first_number * 10] + " " + number_values[last_number.to_i]
-		end
-	elsif num_length == 3
-		two_digit_number = number.to_s[1..2].to_i
-
-		first_number = number.to_s[0].to_i
-		mid_number = number.to_s[1].to_i
-		last_number = number.to_s[num_length - 1]
-		# return number_values[first_number] + " hundred"
+		end		
+	when 3
 		if mid_number > 1
 			return number_values[first_number] + " hundred and " + tens[mid_number * 10] + " " + number_values[last_number.to_i]
 		else
 			if last_number.to_i == 0
-				return number_values[first_number] + " hundred "
+				return number_values[first_number] + " hundred"
 			else
-				return number_values[first_number] + " hundred and " + number_values[two_digit_number]
+				return number_values[first_number] + " hundred and " + number_to_text(rest_of_digits).to_s
 			end
-		end
-	elsif num_length >= 4 && num_length <= 7
-		three_digit_number = number.to_s[1..num_length - 1].to_i
-		# return number_to_text(three_digit_number)
-		first_number = number.to_s[0].to_i
-		last_number = number.to_s[num_length - 1]
-
-		if num_length == 4
-			if last_number.to_i == 0
-				return number_values[first_number] + " thousand"
-			else
-				return number_values[first_number] + " thousand and " + number_to_text(three_digit_number).to_s
-			end
-		elsif num_length == 5
-			return tens[first_number * 10] + " thousand"
-		elsif num_length == 6
-			if last_number.to_i == 0
-				return number_values[first_number] + " hundred thousand"
-			else
-				return number_values[first_number] + " thousand and " + number_to_text(three_digit_number).to_s
-			end
-		else
+		end		
+	when 4
+		if last_number.to_i == 0
 			return number_values[first_number] + " thousand"
-
-		end
+		else
+			return number_values[first_number] + " thousand and " + number_to_text(rest_of_digits).to_s
+		end		
+	when 5
+		return tens[first_number * 10] + " thousand"
+	when 6
+		if last_number.to_i == 0
+			return number_values[first_number] + " hundred thousand"
+		else
+			return number_values[first_number] + " hundred and " + number_to_text(rest_of_digits).to_s
+		end		
+	else
+		return number_values[first_number] + " thousand"		
 	end
 end
 
-puts number_to_text(19)
+puts number_to_text(890001)
 # => Twenty three.
 
 # 875
