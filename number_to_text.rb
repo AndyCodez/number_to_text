@@ -41,7 +41,7 @@ class Num
 		when 2
 			return number_values[number] if number < 20
 			if last_number == 0
-				return tens[first_number * 10] + " "
+				return tens[first_number * 10]
 			else	
 				return tens[first_number * 10] + " " + number_values[last_number.to_i]
 			end		
