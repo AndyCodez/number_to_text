@@ -29,8 +29,6 @@ class Num
 		tens = { 20 => "twenty", 30 => "thirty", 40 => "forty", 
 						50 => "fifty", 60 => "sixty" ,70 => "seventy",80 => "eighty",90 => "ninety"}
 
-		multiples = {100 => "hundred", 1000 => "thousand"}
-		
 		return number_values[number] if num_length == 1 
 
 		rest_of_digits = number.to_s[1..num_length - 1].to_i
@@ -38,7 +36,6 @@ class Num
 		first_number = number.to_s[0].to_i
 		tenths_number = number.to_s[num_length - 2].to_i
 		last_number = number.to_s[num_length - 1].to_i
-
 
 		case num_length
 		when 2
@@ -79,6 +76,4 @@ class Num
 end
 
 puts Num.new.number_to_text(1000)
-# => Twenty three.
 
-# 875
