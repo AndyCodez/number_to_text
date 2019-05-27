@@ -10,6 +10,7 @@ describe "Num.new" do
 		num.number_to_text(5672).must_equal "Five Thousand, Six Hundred and Seventy Two"
 		num.number_to_text(45781).must_equal "Forty Five Thousand, Seven Hundred and Eighty One"
 		num.number_to_text(50000).must_equal "Fifty Thousand"
+		num.number_to_text(-50000).must_equal "Negative Fifty Thousand"
 		num.number_to_text(500000).must_equal "Five Hundred Thousand"
 	end
 end

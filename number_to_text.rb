@@ -16,6 +16,9 @@
 # Ouput: Forty Five Thousand Seven Hundred Eighty One" 
 
 class Num
+	def initialize
+	end
+
 	def number_to_text(number)
 		@@number_values = %w(zero one two three four five 
 							six seven eight nine ten eleven 
@@ -96,9 +99,8 @@ class Num
 		end
 
 		# Negative rule
-		if number < 0
-			combined = "Negative " + combined
-		end
+		combined = "Negative " + combined if number < 0
+		
 		return combined
 	end
 
