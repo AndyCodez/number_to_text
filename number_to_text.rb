@@ -31,9 +31,11 @@ def number_to_text(number)
 
 	multiples = {100 => "hundred", 1000 => "thousand", 1000000 => "million"}
 	
-	if num_length == 1
+	if num_length == 1 
 		return number_values[number] 
-	elsif num_length == 2 
+	elsif num_length == 2 && number < 20
+		return number_values[number] 
+	elsif num_length == 2 && number >= 20
 		# tens
 		first_number = number.to_s[0].to_i
 		last_number = number.to_s[num_length - 1] 
@@ -50,7 +52,7 @@ def number_to_text(number)
 		last_number = number.to_s[num_length - 1]
 		# return number_values[first_number] + " hundred"
 		if mid_number > 1
-			return number_values[first_number] + " hundred " + tens[mid_number * 10] + " " + number_values[last_number.to_i]
+			return number_values[first_number] + " hundred and " + tens[mid_number * 10] + " " + number_values[last_number.to_i]
 		else
 			if last_number.to_i == 0
 				return number_values[first_number] + " hundred "
@@ -85,7 +87,7 @@ def number_to_text(number)
 	end
 end
 
-puts number_to_text(99000)
+puts number_to_text(19)
 # => Twenty three.
 
 # 875
