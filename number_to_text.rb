@@ -20,14 +20,16 @@ class Num
 		@@number_values = ["zero", "one", "two", "three", "four", "five", 
 						"six", "seven", "eight", "nine",
 						"ten" , "eleven","twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+		@@number_values.map!(&:capitalize)
 
 		@@tens = ["", "", "twenty", "thirty", "forty", 
-				"fifty", "sixty" , "seventy", "eighty", "ninety"]						
+				"fifty", "sixty" , "seventy", "eighty", "ninety"]
+		@@tens.map!(&:capitalize)						
 		
 		scale_numbers = ["", "Thousand", "Million", "Billion"]
 		
 		# Zero rule
-		return "zero" if number == 0				
+		return "Zero" if number == 0				
 		num_length = number.to_s.length
 
 		# Holds the four three-digit groups 
