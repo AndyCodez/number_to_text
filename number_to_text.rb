@@ -58,19 +58,34 @@ def number_to_text(number)
 				return number_values[first_number] + " hundred and " + number_values[two_digit_number]
 			end
 		end
-	elsif num_length == 4
+	elsif num_length >= 4 && num_length <= 7
 		three_digit_number = number.to_s[1..num_length - 1].to_i
 		# return number_to_text(three_digit_number)
 		first_number = number.to_s[0].to_i
-		if last_number.to_i == 0
-			return number_values[first_number] + " thousand"
+		last_number = number.to_s[num_length - 1]
+
+		if num_length == 4
+			if last_number.to_i == 0
+				return number_values[first_number] + " thousand"
+			else
+				return number_values[first_number] + " thousand and " + number_to_text(three_digit_number).to_s
+			end
+		elsif num_length == 5
+			return tens[first_number * 10] + " thousand"
+		elsif num_length == 6
+			if last_number.to_i == 0
+				return number_values[first_number] + " hundred thousand"
+			else
+				return number_values[first_number] + " thousand and " + number_to_text(three_digit_number).to_s
+			end
 		else
-			return number_values[first_number] + " thousand and" + number_to_text(three_digit_number).to_s
+			return number_values[first_number] + " thousand"
+
 		end
 	end
 end
 
-puts number_to_text(9003)
+puts number_to_text(99000)
 # => Twenty three.
 
 # 875
