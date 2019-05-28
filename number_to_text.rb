@@ -15,9 +15,9 @@
 # Input: 45781:
 # Ouput: Forty Five Thousand Seven Hundred Eighty One" 
 
-class Num
-
-	def number_to_text(number)
+class NumberConverter
+	
+	def convert_to_text(number)
 		@number_values = %w(zero one two three four five 
 							six seven eight nine ten eleven 
 							twelve thirteen fourteen fifteen 
@@ -41,8 +41,7 @@ class Num
 		positive_number = number.abs
 
 		# Any integer divided by 1000, 
-		# the remainder is equal to 
-		# the last three digits of the original number 
+		# the remainder is equal to the last three digits of the original number 
 		# eg. 57%1000 = 57, 987%1000 = 987, 9763%1000 = 763
 
 		# Extract the 4 three-digit groups
@@ -132,5 +131,5 @@ class Num
 		end	
 end
 
-puts Num.new.number_to_text(150)
+puts NumberConverter.new.convert_to_text(150)
 
