@@ -4,7 +4,7 @@
 # input: 1000
 # output: One Thousand
 
-# Example 2: 
+# Example 2:
 
 # Input: 423
 # Output: Four Hundred Twenty Three
@@ -13,123 +13,118 @@
 # Output: Five Thousand Six Hundred Seventy Two
 
 # Input: 45781:
-# Ouput: Forty Five Thousand Seven Hundred Eighty One" 
+# Ouput: Forty Five Thousand Seven Hundred Eighty One"
 
 class NumberConverter
-	
-	def convert_to_text(number)
-		@number_values = %w(zero one two three four five 
-							six seven eight nine ten eleven 
-							twelve thirteen fourteen fifteen 
-							sixteen seventeen eighteen nineteen
-							).map!(&:capitalize)
+  def convert_to_text(number)
+    @number_values = %w[zero one two three four five
+                        six seven eight nine ten eleven
+                        twelve thirteen fourteen fifteen
+                        sixteen seventeen eighteen nineteen].map!(&:capitalize)
 
-		@tens = ["", "", "twenty", "thirty", "forty", 
-				"fifty", "sixty" , "seventy", "eighty", "ninety"].map!(&:capitalize)						
+    @tens = ['', '', 'twenty', 'thirty', 'forty',
+             'fifty', 'sixty', 'seventy', 'eighty', 'ninety'].map!(&:capitalize)
 
-		@scale_numbers = ["", "thousand", "million", "billion"].map!(&:capitalize)
+    @scale_numbers = ['', 'thousand', 'million', 'billion'].map!(&:capitalize)
 
-		# Zero rule
-		return "Zero" if number == 0				
-		num_length = number.to_s.length
+    # Zero rule
+    return 'Zero' if number == 0
 
-		# Holds the four three-digit groups 
-		digit_groups = Array.new(4)
+    num_length = number.to_s.length
 
-		# Ensure positive number to extract from
-		# To avoid the negative modulus values
-		positive_number = number.abs
+    # Holds the four three-digit groups
+    digit_groups = Array.new(4)
 
-		# Any integer divided by 1000, 
-		# the remainder is equal to the last three digits of the original number 
-		# eg. 57%1000 = 57, 987%1000 = 987, 9763%1000 = 763
+    # Ensure positive number to extract from
+    # To avoid the negative modulus values
+    positive_number = number.abs
 
-		# Extract the 4 three-digit groups
-		# There can never be more than 4 three-digits groups
-		# 1) digit_groups[0] => 9763%1000=763, 
-		# 	positive_number => 9763/1000=9 (Ruby rounds down)
-		
-		# 2) digit_groups[1] => 9%1000=9, 
-		# 	positive_number => 9/1000=0 (Ruby rounds down)
-		
-		# 3) digit_groups[2] => 0%1000=0, 
-		# 	positive_number => 0/1000=0 (Ruby rounds down)
+    # Any integer divided by 1000,
+    # the remainder is equal to the last three digits of the original number
+    # eg. 57%1000 = 57, 987%1000 = 987, 9763%1000 = 763
 
-		# 4) digit_groups[3] => 0%1000=0, 
-		# 	positive_number => 0/1000=0 (Ruby rounds down)	
+    # Extract the 4 three-digit groups
+    # There can never be more than 4 three-digits groups
+    # 1) digit_groups[0] => 9763%1000=763,
+    #   positive_number => 9763/1000=9 (Ruby rounds down)
 
-		# digit_groups = [763, 9, 0, 0]
-		for i in 0...4 do
-			digit_groups[i] = positive_number%1000
-			positive_number /=1000
-		end
+    # 2) digit_groups[1] => 9%1000=9,
+    #   positive_number => 9/1000=0 (Ruby rounds down)
 
-		# Convert the three-digit groups to words
-		group_text = []
-		for i in 0...4 do
-			group_text[i] = three_digit_group_to_words(digit_groups[i])
-		end
+    # 3) digit_groups[2] => 0%1000=0,
+    #   positive_number => 0/1000=0 (Ruby rounds down)
 
-		# Recombine the three-digit groups
-		combined = group_text[0]
-		append_and = false
+    # 4) digit_groups[3] => 0%1000=0,
+    #   positive_number => 0/1000=0 (Ruby rounds down)
 
-		# Check whether an and is needed
-		append_and = (digit_groups[0] > 0) && (digit_groups[0] < 100)
+    # digit_groups = [763, 9, 0, 0]
+    (0...4).each do |i|
+      digit_groups[i] = positive_number % 1000
+      positive_number /= 1000
+    end
 
-		# Process the remaining groups
-		for i in 1...4 do
-			# Only add non-zero digits
-			unless digit_groups[i] == 0
-				# Create tne string to add as a prefix
-				prefix = group_text[i] + " " + @scale_numbers[i]
-				if combined.length != 0
-					prefix += append_and ? " and " : ", "
-				end
+    # Convert the three-digit groups to words
+    group_text = []
+    (0...4).each do |i|
+      group_text[i] = three_digit_group_to_words(digit_groups[i])
+    end
 
-				# Can no longer add " and"
-				append_and = false
+    # Recombine the three-digit groups
+    combined = group_text[0]
+    append_and = false
 
-				# Add the three-digit group to the string
-				combined = prefix + combined 
-			end
-		end
+    # Check whether an and is needed
+    append_and = (digit_groups[0] > 0) && (digit_groups[0] < 100)
 
-		# Negative rule
-		combined = "Negative " + combined if number < 0
+    # Process the remaining groups
+    (1...4).each do |i|
+      # Only add non-zero digits
+      next if digit_groups[i] == 0
 
-		return combined
-	end
+      # Create tne string to add as a prefix
+      prefix = group_text[i] + ' ' + @scale_numbers[i]
+      unless combined.empty?
+        prefix += append_and ? ' and ' : ', '
+      end
 
-	private
-		def three_digit_group_to_words(three_digits)
-			group_text = ""
-			hundreds = three_digits/100
-			tens_units = three_digits%100
+      # Can no longer add " and"
+      append_and = false
 
-			# Hundreds rules
-			if hundreds != 0 
-				group_text += @number_values[hundreds] + " Hundred"
-				unless tens_units == 0 
-					group_text += " and "
-				end
-			end
+      # Add the three-digit group to the string
+      combined = prefix + combined
+    end
 
-			tens = tens_units/10
-			units = tens_units%10
+    # Negative rule
+    combined = 'Negative ' + combined if number < 0
 
-			# Tens rule
-			if tens >= 2
-				group_text += @tens[tens]
-				unless units == 0
-					group_text += " " + @number_values[units]
-				end
-			elsif tens_units != 0 
-					group_text += @number_values[tens_units]
-			end
-			return group_text
-		end	
+    combined
+  end
+
+  private
+
+  def three_digit_group_to_words(three_digits)
+    group_text = ''
+    hundreds = three_digits / 100
+    tens_units = three_digits % 100
+
+    # Hundreds rules
+    if hundreds != 0
+      group_text += @number_values[hundreds] + ' Hundred'
+      group_text += ' and ' unless tens_units == 0
+    end
+
+    tens = tens_units / 10
+    units = tens_units % 10
+
+    # Tens rule
+    if tens >= 2
+      group_text += @tens[tens]
+      group_text += ' ' + @number_values[units] unless units == 0
+    elsif tens_units != 0
+      group_text += @number_values[tens_units]
+    end
+    group_text
+  end
 end
 
 puts NumberConverter.new.convert_to_text(150)
-
