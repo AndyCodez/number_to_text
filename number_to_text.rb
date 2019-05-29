@@ -16,7 +16,9 @@
 # Ouput: Forty Five Thousand Seven Hundred Eighty One"
 
 class NumberConverter
-  def convert_to_text(number)
+
+	def initialize(number)
+		@number = number
     @number_values = %w[zero one two three four five
                         six seven eight nine ten eleven
                         twelve thirteen fourteen fifteen
@@ -26,18 +28,20 @@ class NumberConverter
              'fifty', 'sixty', 'seventy', 'eighty', 'ninety'].map!(&:capitalize)
 
     @scale_numbers = ['', 'thousand', 'million', 'billion'].map!(&:capitalize)
+	end
 
+  def convert_to_text
     # Zero rule
-    return 'Zero' if number == 0
+    return 'Zero' if @number == 0
 
-    num_length = number.to_s.length
+    num_length = @number.to_s.length
 
     # Holds the four three-digit groups
     digit_groups = Array.new(4)
 
     # Ensure positive number to extract from
     # To avoid the negative modulus values
-    positive_number = number.abs
+    positive_number = @number.abs
 
     # Any integer divided by 1000,
     # the remainder is equal to the last three digits of the original number
@@ -95,7 +99,7 @@ class NumberConverter
     end
 
     # Negative rule
-    combined = 'Negative ' + combined if number < 0
+    combined = 'Negative ' + combined if @number < 0
 
     combined
   end
@@ -127,4 +131,5 @@ class NumberConverter
   end
 end
 
-puts NumberConverter.new.convert_to_text(150)
+# puts NumberConverter.new.convert_to_text(150)
+puts NumberConverter.new(23).convert_to_text
