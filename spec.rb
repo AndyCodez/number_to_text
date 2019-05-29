@@ -3,16 +3,15 @@ require_relative 'number_to_text'
 
 describe NumberConverter do
   describe '#number_to_text' do
-    it 'should return a number in words' do
-      num = NumberConverter.new
-      num.convert_to_text(0).must_equal 'Zero'
-      num.convert_to_text(13).must_equal 'Thirteen'
-      num.convert_to_text(23).must_equal 'Twenty Three'
-      num.convert_to_text(5672).must_equal 'Five Thousand, Six Hundred and Seventy Two'
-      num.convert_to_text(45781).must_equal 'Forty Five Thousand, Seven Hundred and Eighty One'
-      num.convert_to_text(50000).must_equal 'Fifty Thousand'
-      num.convert_to_text(-50000).must_equal 'Negative Fifty Thousand'
-      num.convert_to_text(500000).must_equal 'Five Hundred Thousand'
+    it 'should return the number in words' do
+      NumberConverter.new(0).convert_to_text.must_equal 'Zero'
+      NumberConverter.new(13).convert_to_text.must_equal 'Thirteen'
+      NumberConverter.new(23).convert_to_text.must_equal 'Twenty Three'
+      NumberConverter.new(5672).convert_to_text.must_equal 'Five Thousand, Six Hundred and Seventy Two'
+      NumberConverter.new(45781).convert_to_text.must_equal 'Forty Five Thousand, Seven Hundred and Eighty One'
+      NumberConverter.new(50000).convert_to_text.must_equal 'Fifty Thousand'
+      NumberConverter.new(-50000).convert_to_text.must_equal 'Negative Fifty Thousand'
+      NumberConverter.new(1000000).convert_to_text.must_equal 'One Million'
     end
   end
 end
