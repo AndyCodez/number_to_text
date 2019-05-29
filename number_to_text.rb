@@ -15,10 +15,12 @@
 # Input: 45781:
 # Ouput: Forty Five Thousand Seven Hundred Eighty One"
 
-class NumberConverter
+class NumberStore
+  attr_accessor :number_values, :tens, :scale_numbers, :tata
 
-	def initialize(number)
-		@number = number
+  def initialize(number:)
+    @number = number
+
     @number_values = %w[zero one two three four five
                         six seven eight nine ten eleven
                         twelve thirteen fourteen fifteen
@@ -28,8 +30,10 @@ class NumberConverter
              'fifty', 'sixty', 'seventy', 'eighty', 'ninety'].map!(&:capitalize)
 
     @scale_numbers = ['', 'thousand', 'million', 'billion'].map!(&:capitalize)
-	end
+  end
+end
 
+class NumberConverter < NumberStore
   def convert_to_text
     # Zero rule
     return 'Zero' if @number == 0
@@ -131,4 +135,4 @@ class NumberConverter
   end
 end
 
-puts NumberConverter.new(23).convert_to_text
+puts NumberConverter.new(number: 23).convert_to_text
