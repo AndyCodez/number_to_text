@@ -15,9 +15,8 @@
 # Input: 45781:
 # Ouput: Forty Five Thousand Seven Hundred Eighty One"
 
-class NumberStore
-  attr_accessor :number_values, :tens, :scale_numbers, :tata
-
+class NumberConverter 
+  
   def initialize(number:)
     @number = number
 
@@ -31,9 +30,7 @@ class NumberStore
 
     @scale_numbers = ['', 'thousand', 'million', 'billion'].map!(&:capitalize)
   end
-end
 
-class NumberConverter < NumberStore
   def convert_to_text
     # Zero rule
     return 'Zero' if @number == 0
@@ -53,19 +50,6 @@ class NumberConverter < NumberStore
 
     # Extract the 4 three-digit groups
     # There can never be more than 4 three-digits groups
-    # 1) digit_groups[0] => 9763%1000=763,
-    #   positive_number => 9763/1000=9 (Ruby rounds down)
-
-    # 2) digit_groups[1] => 9%1000=9,
-    #   positive_number => 9/1000=0 (Ruby rounds down)
-
-    # 3) digit_groups[2] => 0%1000=0,
-    #   positive_number => 0/1000=0 (Ruby rounds down)
-
-    # 4) digit_groups[3] => 0%1000=0,
-    #   positive_number => 0/1000=0 (Ruby rounds down)
-
-    # digit_groups = [763, 9, 0, 0]
     (0...4).each do |i|
       digit_groups[i] = positive_number % 1000
       positive_number /= 1000
@@ -136,3 +120,4 @@ class NumberConverter < NumberStore
 end
 
 puts NumberConverter.new(number: 23).convert_to_text
+
