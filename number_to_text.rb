@@ -131,5 +131,4 @@ class NumberConverter
   end
 end
 
-# puts NumberConverter.new.convert_to_text(150)
 puts NumberConverter.new(23).convert_to_text
